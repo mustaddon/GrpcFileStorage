@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>net6.0</TargetFramework>
+	<LangVersion>latest</LangVersion>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\GrpcFileStorage.snk</AssemblyOriginatorKeyFile>
+    
+	<AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <Version>1.0.0-rc1</Version>
+	
+	<Company></Company>
+    <Authors>Leonid Salavatov</Authors>
+    <Copyright>Leonid Salavatov 2021</Copyright>
+    <PackageId>GrpcFileStorage</PackageId>
+    <Product>GrpcFileStorage</Product>
+    <Title>GrpcFileStorage</Title>
+    <Description>.NET gRPC file storage</Description>
+    <PackageTags>grpc filestorage dotnet</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/mustaddon/GrpcFileStorage</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mustaddon/GrpcFileStorage</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <NeutralLanguage />
+    <PackageReleaseNotes></PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Endpoint.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="DistributedFileStorage" Version="1.0.0-rc1" />
+	<PackageReference Include="Grpc.AspNetCore" Version="2.39.0" />
+  </ItemGroup>
+	
+  <ItemGroup>
+	<Protobuf Include="Endpoint.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+</Project>

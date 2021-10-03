@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+	<LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\GrpcFileStorage.snk</AssemblyOriginatorKeyFile>
+    
+	<AssemblyVersion>1.0.0</AssemblyVersion>
+    <FileVersion>1.0.0</FileVersion>
+    <Version>1.0.0-rc1</Version>
+	
+	<Company></Company>
+    <Authors>Leonid Salavatov</Authors>
+    <Copyright>Leonid Salavatov 2021</Copyright>
+    <PackageId>GrpcFileStorage.Client</PackageId>
+    <Product>GrpcFileStorage.Client</Product>
+    <Title>GrpcFileStorage.Client</Title>
+    <Description>.NET gRPC file storage client</Description>
+    <PackageTags>grpc filestorage client dotnet</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/mustaddon/GrpcFileStorage</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mustaddon/GrpcFileStorage</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <NeutralLanguage />
+    <PackageReleaseNotes></PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+	<PackageReference Include="DistributedFileStorage.Abstractions" Version="1.0.0-rc1" />
+	<PackageReference Include="Google.Protobuf" Version="3.18.0" />
+	<PackageReference Include="Grpc.Net.Client" Version="2.39.0" />
+	<PackageReference Include="Grpc.Tools" Version="2.40.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<Protobuf Include="..\GrpcFileStorage\Endpoint.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+</Project>
