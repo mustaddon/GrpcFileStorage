@@ -11,11 +11,11 @@ service Endpoint {
 
   rpc Download (FileKey) returns (stream FileChunk);
 
+  rpc Update (FileInfo) returns (Empty);
+
   rpc Delete (FileKey) returns (Empty);
 
-  rpc GetInfo (FileKey) returns (FileInfo);
-
-  rpc UpdateInfo (FileInfo) returns (Empty);
+  rpc GetInfo (stream FileKey) returns (stream FileInfo); 
 
 }
 

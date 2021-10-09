@@ -35,21 +35,24 @@ namespace GrpcFileStorage
                 });
         }
 
-        public override async Task<FileInfo> GetInfo(FileKey request, ServerCallContext context)
+        public override async Task GetInfo(IAsyncStreamReader<FileKey> requestStream, IServerStreamWriter<FileInfo> responseStream, ServerCallContext context)
         {
-            var info = await _fileStorage.GetInfo(request.Id, context.CancellationToken);
-            return new FileInfo
-            {
-                Id = info.Id,
-                Name = info.Name,
-                Metadata = info.Metadata,
-                Length = info.Length,
-            };
+            var ids = MapAsyncEnumerator(requestStream, x => x.Id, context.CancellationToken);
+            var infos = _fileStorage.GetInfos(ids, context.CancellationToken);
+
+            await foreach (var info in infos)
+                await responseStream.WriteAsync(new FileInfo
+                {
+                    Id = info.Id,
+                    Name = info.Name,
+                    Metadata = info.Metadata ?? string.Empty,
+                    Length = info.Length,
+                });
         }
 
-        public override async Task<Empty> UpdateInfo(FileInfo request, ServerCallContext context)
+        public override async Task<Empty> Update(FileInfo request, ServerCallContext context)
         {
-            await _fileStorage.UpdateInfo(request.Id, request.Name, request.Metadata, context.CancellationToken);
+            await _fileStorage.Update(request.Id, request.Name, request.Metadata, context.CancellationToken);
             return new Empty();
         }
 
@@ -59,7 +62,6 @@ namespace GrpcFileStorage
             return new Empty();
         }
 
-
         private static async IAsyncEnumerator<byte[]> GetContent(IAsyncStreamReader<FileUploadChunk> requestStream, CancellationToken cancellationToken)
         {
             do
@@ -67,6 +69,12 @@ namespace GrpcFileStorage
                 if (requestStream.Current.Content.Length > 0)
                     yield return requestStream.Current.Content.ToByteArray();
             } while (await requestStream.MoveNext(cancellationToken));
+        }
+
+        private static async IAsyncEnumerator<TRes> MapAsyncEnumerator<T, TRes>(IAsyncStreamReader<T> requestStream, Func<T, TRes> mapper, CancellationToken cancellationToken)
+        {
+            while (await requestStream.MoveNext(cancellationToken))
+                yield return mapper(requestStream.Current);
         }
     }
 }

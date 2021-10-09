@@ -2,20 +2,26 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddGrpc();
-builder.Services.AddDfsEfc((s, o) =>
+// add services to the container
+builder.Services.AddGrpc(options => options.EnableDetailedErrors = true);
+builder.Services.AddDfsEfc((services, options) =>
 {
-    var connectionString = s.GetRequiredService<IConfiguration>().GetConnectionString("dfs");
-    o.DbContextConfigurator = x => x.UseSqlServer(connectionString);
-
+    // add database provider 
+    options.Database.ContextConfigurator = (db) => db.UseSqlServer(services.GetRequiredService<IConfiguration>().GetConnectionString("dfs"));
+    
+    // add path construction algorithm
     var rnd = new Random();
-    o.FileStorage.PathGenerator = (fileId) => Path.GetFullPath($@"_tmp\fake_disk_{rnd.Next(1, 3)}\{DateTime.Now.ToString(@"yyyy\\MM\\dd")}\{fileId}");
+    options.FileStorage.PathBuilder = (fileId) =>
+    {
+        var nodes = services.GetRequiredService<IConfiguration>().GetSection("FileStorageNodes").Get<string[]>();
+        var randomNode = nodes[rnd.Next(0, nodes.Length)];
+        return Path.GetFullPath($@"{randomNode}\{DateTime.Now:yyyy\\MM\\dd}\{fileId}");
+    };
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-app.UseGrpcFileStorage();
+// map gRPC service to the endpoint
+app.MapGrpcFileStorage();
 
 app.Run();

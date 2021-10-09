@@ -29,7 +29,7 @@ namespace GrpcFileStorage.Client
             if (_channel.IsValueCreated) _channel.Value.Dispose();
         }
 
-        public async Task<string> Add(IAsyncEnumerator<byte[]> content, string name, TMetadata? metadata, CancellationToken cancellationToken = default)
+        public async Task<string> Add(IAsyncEnumerator<byte[]> content, string name, TMetadata? metadata = default, CancellationToken cancellationToken = default)
         {
             using var upload = CreateClient().Upload(
                    headers: DefaultRequestHeaders,
@@ -65,19 +65,26 @@ namespace GrpcFileStorage.Client
                 yield return download.ResponseStream.Current.Content.ToByteArray();
         }
 
-        public async Task<DfsFileInfo<TMetadata>> GetInfo(string id, CancellationToken cancellationToken = default)
+        public async IAsyncEnumerable<IDfsFileInfo<TMetadata>> GetInfos(IAsyncEnumerator<string> ids, [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            var info = await CreateClient().GetInfoAsync(
-                request: new() { Id = id },
-                headers: DefaultRequestHeaders,
-                cancellationToken: cancellationToken);
+            using var infos = CreateClient().GetInfo(
+                   headers: DefaultRequestHeaders,
+                   cancellationToken: cancellationToken);
 
-            return new(id, info.Name, info.Length, DeserializeMetadata(info.Metadata));
+            _ = Task.Run(async () => {
+                while (await ids.MoveNextAsync())
+                    await infos.RequestStream.WriteAsync(new FileKey { Id = ids.Current });
+
+                await infos.RequestStream.CompleteAsync();
+            }, cancellationToken);
+
+            while (await infos.ResponseStream.MoveNext(cancellationToken))
+                yield return Map(infos.ResponseStream.Current);
         }
 
-        public async Task UpdateInfo(string id, string name, TMetadata? metadata, CancellationToken cancellationToken = default)
+        public async Task Update(string id, string name, TMetadata? metadata = default, CancellationToken cancellationToken = default)
         {
-            await CreateClient().UpdateInfoAsync(
+            await CreateClient().UpdateAsync(
                 request: new() { Id = id, Name = name, Metadata = SerializeMetadata(metadata) },
                 headers: DefaultRequestHeaders,
                 cancellationToken: cancellationToken);
@@ -98,12 +105,12 @@ namespace GrpcFileStorage.Client
             return new Endpoint.EndpointClient(_channel.Value);
         }
 
-        private string? SerializeMetadata(TMetadata? metadata)
+        private string SerializeMetadata(TMetadata? metadata)
         {
             if (metadata == null || metadata is string)
-                return metadata as string;
+                return (metadata as string) ?? string.Empty;
 
-            return JsonConvert.SerializeObject(metadata, _settings.JsonSerializer);
+            return JsonConvert.SerializeObject(metadata, _settings.JsonSerializer) ?? string.Empty;
         }
 
         private TMetadata? DeserializeMetadata(string? metadata)
@@ -122,6 +129,11 @@ namespace GrpcFileStorage.Client
             {
                 return default;
             }
+        }
+
+        private DfsFileInfo<TMetadata> Map(FileInfo info)
+        {
+            return new(info.Id, info.Name, info.Length, DeserializeMetadata(info.Metadata));
         }
     }
 }
