@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GrpcFileStorage.Client\GrpcFileStorage.Client.csproj" />
+    <ProjectReference Include="..\..\GrpcFileStorage.Client\GrpcFileStorage.Client.csproj" />
   </ItemGroup>
 
 </Project>
