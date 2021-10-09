@@ -9,10 +9,10 @@
 * Distributed storage
 
 
-![](https://github.com/mustaddon/GrpcFileStorage/tree/main/Examples/diagram.png)
+![](https://raw.githubusercontent.com/mustaddon/GrpcFileStorage/main/Examples/diagram.png)
 
 
-## Example #1: Simple gRPC microservices
+## Example #1: Simple gRPC microservice
 ```
 dotnet new web --name "GrpcService"
 cd GrpcService
