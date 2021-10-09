@@ -28,7 +28,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
-builder.Services.AddGrpc(options => options.EnableDetailedErrors = true);
+builder.Services.AddGrpc();
 builder.Services.AddDfsEfc((services, options) =>
 {
     // add database provider 
