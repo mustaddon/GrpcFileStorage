@@ -17,6 +17,7 @@
 dotnet new web --name "GrpcService"
 cd GrpcService
 dotnet add package GrpcFileStorage
+dotnet add package DistributedFileStorage.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
