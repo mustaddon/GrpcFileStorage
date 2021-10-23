@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="DistributedFileStorage.EntityFrameworkCore" Version="1.0.1" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.10" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
   </ItemGroup>
 
   <ItemGroup>
