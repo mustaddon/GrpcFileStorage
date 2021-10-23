@@ -6,7 +6,7 @@
 * Storing metadata in the database (SQL/NoSQL)
 * Storing files in the file system
 * Deduplication of files by content
-* Distributed storage
+* Distributed storage (multiple disks)
 
 
 ![](https://raw.githubusercontent.com/mustaddon/GrpcFileStorage/main/Examples/diagram.png)

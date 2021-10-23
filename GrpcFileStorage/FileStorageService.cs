@@ -1,4 +1,4 @@
-using DistributedFileStorage.Abstractions;
+using DistributedFileStorage;
 using Google.Protobuf;
 using Grpc.Core;
 
