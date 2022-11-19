@@ -1,23 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	<TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+	<TargetFrameworks>net5.0;net6.0;net7.0</TargetFrameworks>
 	<LangVersion>latest</LangVersion>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>enable</ImplicitUsings>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\GrpcFileStorage.snk</AssemblyOriginatorKeyFile>
-	<AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
-    <Version>1.0.2</Version>
+	<AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
+    <Version>1.0.3</Version>
 	<Company></Company>
     <Authors>Leonid Salavatov</Authors>
-    <Copyright>Leonid Salavatov 2021</Copyright>
+    <Copyright>Leonid Salavatov 2022</Copyright>
     <PackageId>GrpcFileStorage</PackageId>
     <Product>GrpcFileStorage</Product>
     <Title>GrpcFileStorage</Title>
     <Description>.NET gRPC file storage service</Description>
-    <PackageTags>grpc filestorage microservice aspnetcore dotnet</PackageTags>
+    <PackageTags>grpc microservice filestorage file-storage blobstorage blob-storage distributed-storage storage</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/mustaddon/GrpcFileStorage</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mustaddon/GrpcFileStorage</RepositoryUrl>
@@ -33,8 +33,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="DistributedFileStorage" Version="1.0.2" />
-	<PackageReference Include="Grpc.AspNetCore" Version="2.40.0" />
+	<PackageReference Include="DistributedFileStorage" Version="1.0.3" />
+	<PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
   </ItemGroup>
 	
   <ItemGroup>

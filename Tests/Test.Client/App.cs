@@ -7,7 +7,7 @@ namespace Test.Client
 {
     internal class App
     {
-        public static Lazy<IHost> Instance = new Lazy<IHost>(static () =>
+        public static Lazy<IHost> Instance = new(static () =>
         {
             var builder = Host.CreateDefaultBuilder()
                 .ConfigureServices((hostContext, services) =>
