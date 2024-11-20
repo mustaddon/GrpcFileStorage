@@ -2,7 +2,6 @@
 using GrpcFileStorage.Client;
 using Newtonsoft.Json;
 
-
 // create client
 using var client = new FileStorageClient<MyCustomMetadata>("https://localhost:7272");
 

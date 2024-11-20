@@ -123,7 +123,7 @@ namespace GrpcFileStorage.Client
 
             try
             {
-                return JsonConvert.DeserializeObject<TMetadata?>(metadata, _settings.JsonSerializer);
+                return JsonConvert.DeserializeObject<TMetadata?>(metadata!, _settings.JsonSerializer);
             }
             catch
             {
