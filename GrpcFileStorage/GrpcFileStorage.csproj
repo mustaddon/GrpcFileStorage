@@ -7,9 +7,9 @@
 	<ImplicitUsings>enable</ImplicitUsings>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>..\GrpcFileStorage.snk</AssemblyOriginatorKeyFile>
-	<AssemblyVersion>1.1.1</AssemblyVersion>
-    <FileVersion>1.1.1</FileVersion>
-    <Version>1.1.1</Version>
+	<AssemblyVersion>1.1.2</AssemblyVersion>
+    <FileVersion>1.1.2</FileVersion>
+    <Version>1.1.2</Version>
 	<Company></Company>
     <Authors>Leonid Salavatov</Authors>
     <Copyright>Leonid Salavatov 2024</Copyright>
@@ -29,8 +29,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="DistributedFileStorage" Version="1.1.1" />
-  	<PackageReference Include="Grpc.AspNetCore" Version="2.66.0" />
+	<PackageReference Include="DistributedFileStorage" Version="1.1.2" />
+  	<PackageReference Include="Grpc.AspNetCore" Version="2.67.0" />
   </ItemGroup>
   
   <ItemGroup>

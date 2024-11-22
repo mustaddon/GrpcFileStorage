@@ -29,7 +29,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // add services to the container
 builder.Services.AddGrpc();
-builder.Services.AddDfsEfc((services, options) =>
+builder.Services.AddDfsEfc(options =>
 {
     // add database provider 
     options.Database.ContextConfigurator = (db) => db.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=DfsDatabase;Integrated Security=True;Persist Security Info=False;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=False");
